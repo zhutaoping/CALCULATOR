@@ -64,7 +64,16 @@ body {
 }
 
 .display {
-  border: 1px solid black;
+  display: flex;
+  font-size: 1.5rem;
+  color: rgb(223, 223, 223);
+  padding: 10px;
+  overflow-wrap: anywhere;
+  direction: rtl;
+  /* word-break: break-all; */
+  justify-content: right;
+  align-items: flex-end;
+  border: 5px solid var(--clr-background);
   background-color: var(--clr-diaplay);
   height: 20vh;
 }
