@@ -36,9 +36,7 @@ function operate(num1, op, num2) {
       break;
 
     case op == "/":
-      console.log(
-        Math.round((divide(num1, num2) + Number.EPSILON) * 100) / 100
-      );
+      console.log(Math.round(divide(num1, num2) * 100) / 100);
       break;
 
     case op == "%":
@@ -67,4 +65,4 @@ function remainder(n1, n2) {
   return n1 % n2;
 }
 
-operate(5, "%", 3);
+operate(5, "/", 3);
