@@ -69,7 +69,6 @@ body {
   color: rgb(223, 223, 223);
   padding: 10px;
   overflow-wrap: anywhere;
-  direction: rtl;
   /* word-break: break-all; */
   justify-content: right;
   align-items: flex-end;
