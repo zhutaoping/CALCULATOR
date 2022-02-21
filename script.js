@@ -19,8 +19,6 @@ let index = 0;
 const operators = ["+", "−", "×", "÷", "%", "="];
 
 function charsToStr(c) {
-  // index = charsArr.findIndex(isNaN);
-
   const firstOp = (el) =>
     el == "+" || el == "−" || el == "×" || el == "÷" || el == "%";
 
@@ -52,6 +50,25 @@ function charsToStr(c) {
   // console.log(str1, str2, op1);
 }
 
+function countDot(s) {
+  const dots = charsArr.filter((el) => el == ".");
+  const countDot = dots.length;
+  console.log(countDot);
+  return countDot;
+}
+
+function checkOp() {
+  return charsArr.some((el) => operators.includes(el));
+}
+
+function cntDotB4Op() {
+  const firstOp = (el) =>
+    el == "+" || el == "−" || el == "×" || el == "÷" || el == "%";
+  index = charsArr.findIndex(firstOp);
+  const front = charsArr.slice(0, index);
+  return countDot(front);
+}
+
 function operation() {
   if (this.textContent == "C") {
     displayer.textContent = "";
@@ -77,19 +94,34 @@ function operation() {
   )
     return;
 
-  if (
-    charsArr[charsArr.length - 1] == "." &&
-    operators.includes(this.textContent || "=")
-  )
-    return;
+  // All about dot
+  if (!checkOp() && countDot() >= 1 && this.textContent == ".") return;
 
   if (
-    charsArr != "" &&
-    charsArr.every((el) => el == ".") &&
+    checkOp() &&
+    cntDotB4Op() >= 1 &&
+    countDot() >= 2 &&
     this.textContent == "."
   )
     return;
 
+  if (
+    checkOp() &&
+    cntDotB4Op() < 1 &&
+    countDot() > 1 &&
+    this.textContent == "."
+  )
+    return;
+
+  if (
+    charsArr[charsArr.length - 1] == "." &&
+    operators.includes(this.textContent)
+  )
+    return;
+
+  if (charsArr[charsArr.length - 1] == "." && this.textContent == ".") return;
+
+  // About equql sign
   if (this.textContent == "=") {
     // console.log(charsArr);
     charsToStr(charsArr);
@@ -109,7 +141,7 @@ function operation() {
     operators.includes(charsArr[charsArr.length - 1]) &&
     operators.includes(this.textContent)
   ) {
-    console.log(charsArr[charsArr.length - 1]);
+    // console.log(charsArr[charsArr.length - 1]);
     return;
   }
 
@@ -124,6 +156,7 @@ function operation() {
     charsArr.unshift("0");
   }
 
+  // End of input validstions
   charsArr.push(this.textContent);
   displayer.textContent = charsArr.join("");
 }
@@ -139,28 +172,27 @@ let calc = function (num1, num2, cb) {
 };
 
 function add(n1, n2) {
-  const rounded = Math.round((n1 + n2) * 100) / 100;
-  return rounded;
+  return roundNum(n1 + n2);
 }
 
 function subtract(n1, n2) {
-  const rounded = Math.round((n1 - n2) * 100) / 100;
-  return rounded;
+  return roundNum(n1 - n2);
 }
 
 function multiply(n1, n2) {
-  const rounded = Math.round(n1 * n2 * 100) / 100;
-  return rounded;
+  return roundNum(n1 * n2);
 }
 
 function divide(n1, n2) {
-  const rounded = Math.round((n1 / n2) * 100) / 100;
-  return rounded;
+  return roundNum(n1 / n2);
 }
 
 function remainder(n1, n2) {
-  const rounded = Math.round((n1 % n2) * 100) / 100;
-  return rounded;
+  return roundNum(n1 % n2);
+}
+
+function roundNum(n) {
+  return Math.round(n * 100) / 100;
 }
 
 //switch (true) {
