@@ -140,7 +140,59 @@ function operation() {
     return;
   }
 
+  if (this.textContent == "+") {
+    while (countOp() > 0) {
+      charsToStr(charsArr);
+      if (str2 == "") {
+        return;
+      } else {
+        op2 = this.textContent;
+        calc(str1, str2, op1);
+      }
+      return;
+    }
+  }
+
   if (this.textContent == "−") {
+    while (countOp() > 0) {
+      charsToStr(charsArr);
+      if (str2 == "") {
+        return;
+      } else {
+        op2 = this.textContent;
+        calc(str1, str2, op1);
+      }
+      return;
+    }
+  }
+
+  if (this.textContent == "×") {
+    while (countOp() > 0) {
+      charsToStr(charsArr);
+      if (str2 == "") {
+        return;
+      } else {
+        op2 = this.textContent;
+        calc(str1, str2, op1);
+      }
+      return;
+    }
+  }
+
+  if (this.textContent == "÷") {
+    while (countOp() > 0) {
+      charsToStr(charsArr);
+      if (str2 == "") {
+        return;
+      } else {
+        op2 = this.textContent;
+        calc(str1, str2, op1);
+      }
+      return;
+    }
+  }
+
+  if (this.textContent == "%") {
     while (countOp() > 0) {
       charsToStr(charsArr);
       if (str2 == "") {
@@ -186,9 +238,15 @@ let calc = function (num1, num2, cb) {
   const n2 = Number(num2);
   let ans = cb(n1, n2);
   charsArr = ans;
-  charsArr = [...ans.toString()];
-  displayer.textContent = ans;
+  if (op2 == "=") {
+    charsArr = [...ans.toString()];
+    displayer.textContent = ans;
+    return;
+  }
+  charsArr = [...ans.toString(), op2];
+  displayer.textContent = ans + op2;
   console.log(charsArr);
+  console.log(op2);
 };
 
 function add(n1, n2) {
