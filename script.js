@@ -1,10 +1,4 @@
 "use strict";
-
-//  charsArr.some(
-//         (el) => el == "+" || el == "−" || el == "×" || el == "÷" || el == "%"
-//       ) &&
-//       charsArr.length == 2
-
 const displayer = document.querySelector(".display");
 const allBtn = document.querySelectorAll(".button");
 allBtn.forEach((btn) => btn.addEventListener("click", operation));
@@ -19,6 +13,8 @@ let index = 0;
 const operators = ["+", "−", "×", "÷", "%", "="];
 
 function charsToStr(c) {
+  // if (countOp() < 1) return;
+
   const firstOp = (el) =>
     el == "+" || el == "−" || el == "×" || el == "÷" || el == "%";
 
@@ -47,7 +43,7 @@ function charsToStr(c) {
   const back = charsArr.slice(index + 1);
   str1 = front.join("");
   str2 = back.join("");
-  // console.log(str1, str2, op1);
+  console.log(str1, str2, op1);
 }
 
 function countDot(s) {
@@ -61,6 +57,15 @@ function checkOp() {
   return charsArr.some((el) => operators.includes(el));
 }
 
+function countOp() {
+  const ops = charsArr.filter(
+    (el) => el == "+" || el == "−" || el == "×" || el == "÷" || el == "%"
+  );
+  const countOp = ops.length;
+  // console.log(countOp);
+  return countOp;
+}
+
 function cntDotB4Op() {
   const firstOp = (el) =>
     el == "+" || el == "−" || el == "×" || el == "÷" || el == "%";
@@ -69,6 +74,7 @@ function cntDotB4Op() {
   return countDot(front);
 }
 
+// Input validation
 function operation() {
   if (this.textContent == "C") {
     displayer.textContent = "";
@@ -121,9 +127,8 @@ function operation() {
 
   if (charsArr[charsArr.length - 1] == "." && this.textContent == ".") return;
 
-  // About equql sign
+  // Equql = sign
   if (this.textContent == "=") {
-    // console.log(charsArr);
     charsToStr(charsArr);
     if (str2 == "") {
       return;
@@ -133,6 +138,19 @@ function operation() {
       calc(str1, str2, op1);
     }
     return;
+  }
+
+  if (this.textContent == "−") {
+    while (countOp() > 0) {
+      charsToStr(charsArr);
+      if (str2 == "") {
+        return;
+      } else {
+        op2 = this.textContent;
+        calc(str1, str2, op1);
+      }
+      return;
+    }
   }
 
   if (charsArr == "0" && !isNaN(this.textContent)) return;
@@ -156,9 +174,11 @@ function operation() {
     charsArr.unshift("0");
   }
 
-  // End of input validstions
   charsArr.push(this.textContent);
   displayer.textContent = charsArr.join("");
+  console.log(charsArr);
+
+  // End of input validstions
 }
 
 let calc = function (num1, num2, cb) {
