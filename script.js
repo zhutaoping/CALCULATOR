@@ -46,15 +46,19 @@ function charsToStr(c) {
   console.log(str1, str2, op1);
 }
 
-function countDot(s) {
+function countDot() {
+  console.log(charsArr);
   const dots = charsArr.filter((el) => el == ".");
   const countDot = dots.length;
-  console.log(countDot);
   return countDot;
 }
 
 function checkOp() {
   return charsArr.some((el) => operators.includes(el));
+}
+
+function checkDot() {
+  return charsArr.some((el) => el == ".");
 }
 
 function countOp() {
@@ -67,11 +71,17 @@ function countOp() {
 }
 
 function cntDotB4Op() {
+  // console.log(charsArr);
   const firstOp = (el) =>
     el == "+" || el == "−" || el == "×" || el == "÷" || el == "%";
   index = charsArr.findIndex(firstOp);
+  // console.log(index);
   const front = charsArr.slice(0, index);
-  return countDot(front);
+  // console.log(front);
+  const dots = front.filter((el) => el == ".");
+  const cb4 = dots.length;
+  // console.log(cb4);
+  return cb4;
 }
 
 // Input validation
@@ -103,21 +113,21 @@ function operation() {
   // All about dot
   if (!checkOp() && countDot() >= 1 && this.textContent == ".") return;
 
-  if (
-    checkOp() &&
-    cntDotB4Op() >= 1 &&
-    countDot() >= 2 &&
-    this.textContent == "."
-  )
-    return;
+  if (checkOp() && this.textContent == ".") {
+    if (cntDotB4Op() > 0 && countDot() >= 2) {
+      return;
+    } else if (cntDotB4Op() < 1 && countDot() >= 1) {
+      return;
+    }
+  }
 
-  if (
-    checkOp() &&
-    cntDotB4Op() < 1 &&
-    countDot() > 1 &&
-    this.textContent == "."
-  )
-    return;
+  // if (
+  //   checkOp() &&
+  //   cntDotB4Op() <= 0 &&
+  //   countDot() > 0 &&
+  //   this.textContent == "."
+  // )
+  //   return;
 
   if (
     charsArr[charsArr.length - 1] == "." &&
@@ -228,7 +238,7 @@ function operation() {
 
   charsArr.push(this.textContent);
   displayer.textContent = charsArr.join("");
-  console.log(charsArr);
+  // console.log(charsArr);
 
   // End of input validstions
 }
