@@ -11,10 +11,14 @@ let str2 = "";
 let index = 0;
 const operators = ["+", "−", "×", "÷", "%", "="];
 
-function charsToStr() {
+function fdIndex() {
   const firstOp = (el) =>
     el == "+" || el == "−" || el == "×" || el == "÷" || el == "%";
-  index = charsArr.findIndex(firstOp);
+  return charsArr.findIndex(firstOp);
+}
+
+function charsToStr() {
+  index = fdIndex();
   switch (true) {
     case charsArr[index] == "+":
       op1 = add;
@@ -32,7 +36,6 @@ function charsToStr() {
       op1 = remainder;
       break;
   }
-
   const front = charsArr.slice(0, index);
   const back = charsArr.slice(index + 1);
   str1 = front.join("");
@@ -40,6 +43,7 @@ function charsToStr() {
   console.log(str1, str2, op1);
 }
 
+// For dots
 function countDot() {
   const dots = charsArr.filter((el) => el == ".");
   const countDot = dots.length;
@@ -50,22 +54,21 @@ function checkOp() {
   return charsArr.some((el) => operators.includes(el));
 }
 
+function cntDotB4Op() {
+  index = fdIndex();
+  const front = charsArr.slice(0, index);
+  const dots = front.filter((el) => el == ".");
+  const cb4 = dots.length;
+  return cb4;
+}
+
+// For operators l.131
 function countOp() {
   const ops = charsArr.filter(
     (el) => el == "+" || el == "−" || el == "×" || el == "÷" || el == "%"
   );
   const countOp = ops.length;
   return countOp;
-}
-
-function cntDotB4Op() {
-  const firstOp = (el) =>
-    el == "+" || el == "−" || el == "×" || el == "÷" || el == "%";
-  index = charsArr.findIndex(firstOp);
-  const front = charsArr.slice(0, index);
-  const dots = front.filter((el) => el == ".");
-  const cb4 = dots.length;
-  return cb4;
 }
 
 // Input validation and operators processing
