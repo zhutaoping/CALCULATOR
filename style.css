@@ -70,7 +70,7 @@ body {
   align-items: flex-end;
   border: 5px solid var(--clr-background);
   background-color: var(--clr-diaplay);
-  height: 20vh;
+  height: 15vh;
 }
 
 .buttons {

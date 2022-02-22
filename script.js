@@ -40,7 +40,6 @@ function charsToStr() {
   const back = charsArr.slice(index + 1);
   str1 = front.join("");
   str2 = back.join("");
-  console.log(str1, str2, op1);
 }
 
 // For dots
@@ -73,6 +72,15 @@ function countOp() {
 
 // Input validation and operators processing
 function operation() {
+  if (this.textContent == "+/−") {
+    if (!isNaN(charsArr[charsArr.length - 1])) {
+      return;
+    }
+    charsArr.push("-");
+    displayer.textContent = charsArr.join("");
+    return;
+  }
+
   if (this.textContent == "C") {
     displayer.textContent = "";
     charsArr = [];
@@ -122,66 +130,19 @@ function operation() {
     if (str2 == "") {
       return;
     } else {
-      // console.log(op1);
       op2 = this.textContent;
       calc(str1, str2, op1);
     }
     return;
   }
 
-  if (this.textContent == "+") {
-    while (countOp() > 0) {
-      charsToStr(charsArr);
-      if (str2 == "") {
-        return;
-      } else {
-        op2 = this.textContent;
-        calc(str1, str2, op1);
-      }
-      return;
-    }
-  }
-
-  if (this.textContent == "−") {
-    while (countOp() > 0) {
-      charsToStr(charsArr);
-      if (str2 == "") {
-        return;
-      } else {
-        op2 = this.textContent;
-        calc(str1, str2, op1);
-      }
-      return;
-    }
-  }
-
-  if (this.textContent == "×") {
-    while (countOp() > 0) {
-      charsToStr(charsArr);
-      if (str2 == "") {
-        return;
-      } else {
-        op2 = this.textContent;
-        calc(str1, str2, op1);
-      }
-      return;
-    }
-  }
-
-  if (this.textContent == "÷") {
-    while (countOp() > 0) {
-      charsToStr(charsArr);
-      if (str2 == "") {
-        return;
-      } else {
-        op2 = this.textContent;
-        calc(str1, str2, op1);
-      }
-      return;
-    }
-  }
-
-  if (this.textContent == "%") {
+  if (
+    this.textContent == "+" ||
+    this.textContent == "−" ||
+    this.textContent == "×" ||
+    this.textContent == "÷" ||
+    this.textContent == "%"
+  ) {
     while (countOp() > 0) {
       charsToStr(charsArr);
       if (str2 == "") {
@@ -213,16 +174,14 @@ function operation() {
   if (charsArr == "" && this.textContent == ".") {
     charsArr.unshift("0");
   }
+  // End of input validstions
 
   charsArr.push(this.textContent);
   displayer.textContent = charsArr.join("");
-  // End of input validstions
 }
 
-let calc = function (num1, num2, cb) {
-  const n1 = Number(num1);
-  const n2 = Number(num2);
-  let ans = cb(n1, n2);
+function calc(num1, num2, callback) {
+  const ans = callback(Number(num1), Number(num2));
   charsArr = ans;
   if (op2 == "=") {
     charsArr = [...ans.toString()];
@@ -231,7 +190,7 @@ let calc = function (num1, num2, cb) {
   }
   charsArr = [...ans.toString(), op2];
   displayer.textContent = ans + op2;
-};
+}
 
 function add(n1, n2) {
   return roundNum(n1 + n2);
