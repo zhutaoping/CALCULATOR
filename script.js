@@ -45,8 +45,7 @@ function charsToStr() {
 // For dots
 function countDot() {
   const dots = charsArr.filter((el) => el == ".");
-  const countDot = dots.length;
-  return countDot;
+  return dots.length;
 }
 
 function checkOp() {
@@ -57,8 +56,7 @@ function cntDotB4Op() {
   index = fdIndex();
   const front = charsArr.slice(0, index);
   const dots = front.filter((el) => el == ".");
-  const cb4 = dots.length;
-  return cb4;
+  return dots.length;
 }
 
 // For operators l.131
@@ -66,8 +64,7 @@ function countOp() {
   const ops = charsArr.filter(
     (el) => el == "+" || el == "−" || el == "×" || el == "÷" || el == "%"
   );
-  const countOp = ops.length;
-  return countOp;
+  return ops.length;
 }
 
 // Input validation and operators processing
