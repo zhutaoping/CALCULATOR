@@ -9,11 +9,11 @@ let op2 = "";
 let str1 = "";
 let str2 = "";
 let index = 0;
-const operators = ["+", "−", "×", "÷", "%", "="];
+const operators = ["+", "−", "×", "÷", "^", "="];
 
 function fdIndex() {
   const firstOp = (el) =>
-    el == "+" || el == "−" || el == "×" || el == "÷" || el == "%";
+    el == "+" || el == "−" || el == "×" || el == "÷" || el == "^";
   return charsArr.findIndex(firstOp);
 }
 
@@ -32,8 +32,8 @@ function charsToStr() {
     case charsArr[index] == "÷":
       op1 = divide;
       break;
-    case charsArr[index] == "%":
-      op1 = remainder;
+    case charsArr[index] == "^":
+      op1 = power;
       break;
   }
   const front = charsArr.slice(0, index);
@@ -62,7 +62,7 @@ function cntDotB4Op() {
 // For operators l.131
 function countOp() {
   const ops = charsArr.filter(
-    (el) => el == "+" || el == "−" || el == "×" || el == "÷" || el == "%"
+    (el) => el == "+" || el == "−" || el == "×" || el == "÷" || el == "^"
   );
   return ops.length;
 }
@@ -93,12 +93,13 @@ function operation() {
 
   if (
     charsArr == "" &&
-    (this.textContent == "−" ||
-      this.textContent == "×" ||
-      this.textContent == "÷" ||
-      this.textContent == "%" ||
-      this.textContent == "+" ||
-      this.textContent == "=")
+    operators.includes(this.textContent)
+    // (this.textContent == "−" ||
+    //   this.textContent == "×" ||
+    //   this.textContent == "÷" ||
+    //   this.textContent == "^" ||
+    //   this.textContent == "+" ||
+    //   this.textContent == "=")
   )
     return;
 
@@ -138,7 +139,7 @@ function operation() {
     this.textContent == "−" ||
     this.textContent == "×" ||
     this.textContent == "÷" ||
-    this.textContent == "%"
+    this.textContent == "^"
   ) {
     while (countOp() > 0) {
       charsToStr(charsArr);
@@ -205,8 +206,13 @@ function divide(n1, n2) {
   return roundNum(n1 / n2);
 }
 
-function remainder(n1, n2) {
-  return roundNum(n1 % n2);
+function power(n1, n2) {
+  let ans = n1;
+  if (n2 == 0) return 1;
+  for (let i = 1; i < n2; i++) {
+    ans *= n1;
+  }
+  return roundNum(ans);
 }
 
 function roundNum(n) {
